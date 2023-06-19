@@ -1,0 +1,99 @@
+<h1>Miska - музичний плеєр №1 у світі</h1>
+
+<%= form_tag(getMusic_path, method: "get") do %>
+  <%= text_field_tag :search, params[:search], placeholder: "Шукати за назвою" %>
+  <%= submit_tag "Пошук", name: nil %>
+<% end %>
+
+<div id="playlist-music" style="display: none;"></div>
+
+<div class="playlists-section">
+  <h2>Плейлисти:</h2>
+  <%= form_tag(getMusic_path, method: "get") do %>
+    <%= select_tag :playlist_id, options_from_collection_for_select(@playlists, "id", "playlistName"), prompt: "Виберіть плейлист" %>
+    <%= submit_tag "Показати", name: nil %>
+  <% end %>
+</div>
+
+</br>
+
+<% if @selectedPlaylist %>
+  <h2>Пісні з плейлисту <%= @selectedPlaylist.playlistName %>:</h2>
+  <% @selectedPlaylist.music.each do |music| %>
+    <h2><%= music.musicName %></h2>
+    <div class="audio-container">
+      <% if music.audio.attached? %>
+        <audio controls>
+          <source src="<%= url_for(music.audio) %>" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <br>
+      <% end %>
+      <div class="audio-info">
+        <p><strong>Name:</strong> <%= music.musicName %></p>
+        <p><strong>Description:</strong> <%= music.musicDescription %></p>
+        <pre><p><strong>Text:</strong> <%= music.musicText %></p></pre>
+        <p><strong>Publish Date:</strong> <%= music.publishDate %></p>
+
+        <%= form_tag(likeMusic_path, method: "post") do %>
+          <%= hidden_field_tag :id, music.id %>
+          <%= submit_tag "Like", class: "like-button", style: music.likes.exists?(user_id: 1) ? 'background-color: red;' : '' %>
+        <% end %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+<% else %>
+  <% @allMusic.each do |music| %>
+    <div class="audio-container">
+      <% if music.audio.attached? %>
+        <audio controls>
+          <source src="<%= url_for(music.audio) %>" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <%= form_tag(likeMusic_path, method: "post") do %>
+          <%= hidden_field_tag :id, music.id %>
+          <%= submit_tag "Like", class: "like-button", style: music.likes.exists?(user_id: 1) ? 'background-color: red;' : '' %>
+        <% end %>
+        <br>
+      <% end %>
+      <div class="audio-info">
+  <p><strong>Name:</strong> <%= music.musicName %></p>
+
+  <% if music.artists.any? %>
+    <p><strong>Authors:</strong></p>
+    <ul>
+      <% music.artists.each do |author| %>
+        <li><%= author.firstName %> <%= author.lastName %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <p><strong>Description:</strong> <%= music.musicDescription %></p>
+  <p><strong>Text:</strong></p>
+  <pre><%= music.musicText %></pre>
+  <p><strong>Publish Date:</strong> <%= music.publishDate %></p>
+
+</div>
+
+    <hr>
+  <% end %>
+<% end %>
+
+<style>
+.audio-info {
+  display: none;
+}
+
+.audio-container:hover .audio-info {
+  display: block;
+}
+
+.like-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+</style>

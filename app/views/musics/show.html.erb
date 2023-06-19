@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @music %>
+
+<p>
+  <strong>Audio:</strong>
+  <% if @music.audio.attached? %>
+    <audio controls>
+      <source src="<%= url_for(@music.audio) %>" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  <% else %>
+    No audio available
+  <% end %>
+</p>
+
+
+<div>
+  <%= link_to "Edit this music", edit_music_path(@music) %> |
+  <%= link_to "Back to musics", musics_path %>
+
+  <%= button_to "Destroy this music", @music, method: :delete %>
+</div>

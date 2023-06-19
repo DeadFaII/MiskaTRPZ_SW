@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  firstName: MyString
+  lastName: MyString
+  nickname: MyString
+  birthday: 2023-06-09
+  isArtist: false
+
+two:
+  firstName: MyString
+  lastName: MyString
+  nickname: MyString
+  birthday: 2023-06-09
+  isArtist: false

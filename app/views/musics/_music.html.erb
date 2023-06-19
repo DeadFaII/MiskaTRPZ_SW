@@ -1,0 +1,44 @@
+<div id="<%= dom_id(music) %>">
+  <p>
+    <strong>Music Name:</strong>
+    <%= music.musicName %>
+  </p>
+
+  <p>
+    <strong>Music Description:</strong>
+    <%= music.musicDescription %>
+  </p>
+
+  <p>
+    <strong>Music Text:</strong>
+    <%= music.musicText %>
+  </p>
+
+  <p>
+    <strong>Publish Date:</strong>
+    <%= music.publishDate %>
+  </p>
+
+  <p>
+    <strong>Is Free:</strong>
+    <%= music.isFree %>
+  </p>
+
+  <% if music.playlists.any? %>
+    <p>
+      <strong>Playlists:</strong>
+      <% music.playlists.each do |playlist| %>
+        <%= playlist.playlistName %>,
+      <% end %>
+    </p>
+  <% end %>
+
+  <% if music.artists.any? %>
+    <p>
+      <strong>Authors:</strong>
+      <% music.artists.each do |author| %>
+        <%= author.firstName %> <%= author.lastName %> | 
+      <% end %>
+    </p>
+  <% end %>
+</div>

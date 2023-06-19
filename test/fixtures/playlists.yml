@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  playlistName: MyString
+  playlistDescription: MyText
+  creationDate: 2023-06-09
+  isPublic: false
+
+two:
+  playlistName: MyString
+  playlistDescription: MyText
+  creationDate: 2023-06-09
+  isPublic: false

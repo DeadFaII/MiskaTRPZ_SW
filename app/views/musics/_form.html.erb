@@ -1,0 +1,58 @@
+<!-- app/views/musics/_form.html.erb -->
+<%= form_with(model: @music, local: true) do |form| %>
+  <% if @music.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@music.errors.count, "error") %> prohibited this music from being saved:</h2>
+
+      <ul>
+        <% @music.errors.full_messages.each do |error| %>
+          <li><%= error %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :musicName, style: "display: block" %>
+    <%= form.text_field :musicName %>
+  </div>
+
+  <div>
+    <%= form.label :audio, style: "display: block" %>
+    <%= form.file_field :audio %>
+  </div>
+
+  <div>
+    <%= form.label :musicDescription, style: "display: block" %>
+    <%= form.text_area :musicDescription %>
+  </div>
+
+  <div>
+    <%= form.label :musicText, style: "display: block" %>
+    <%= form.text_area :musicText %>
+  </div>
+
+  <div>
+    <%= form.label :publishDate, style: "display: block" %>
+    <%= form.date_field :publishDate %>
+  </div>
+
+  <div>
+    <%= form.label :isFree, style: "display: block" %>
+    <%= form.check_box :isFree %>
+  </div>
+
+  <div>
+    <%= form.label :playlist_ids, "Select Playlists", style: "display: block" %>
+    <%= form.collection_select :playlist_ids, Playlist.all, :id, :playlistName, {}, multiple: true %>
+  </div>
+
+  <div>
+    <%= form.label :artist_ids, "Select Artists", style: "display: block" %>
+    <%= form.collection_select :artist_ids, @artists, :id, :nickname, {}, multiple: true %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
